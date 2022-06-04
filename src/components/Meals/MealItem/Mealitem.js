@@ -16,7 +16,7 @@ const MealItem = (props) => {
                 </div>
                 {/* Holds Number of items and basket */}
                 <div>
-                    <MealItemForm />
+                    <MealItemForm id={props.id}/>
                 </div>
             </li>
         </React.Fragment>
