@@ -11,7 +11,8 @@ const Header = (props) => {
             {/* Nav Bar */}
             <header className={styles.header}>
                 <h1>Anas Cafe</h1>
-                <HeaderChartButton />
+                {/* I'm forwarding that point at that function in App to the whenClicked prop on the HeaderCartButton*/}
+                <HeaderChartButton whenCartVisibilityIsClicked={props.onCartVisibility}/>
             </header>
             {/* Image Location */}
             <div className={styles.mainImage}>

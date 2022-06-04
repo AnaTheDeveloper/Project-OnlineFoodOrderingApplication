@@ -4,21 +4,17 @@ import ReactDOM from 'react-dom';
 
 //Use portal for backdrop and model overlay.
 const Backdrop = (props) => {
-
     return (
-        <div className={styles.backdrop}></div>
+        <div className={styles.backdrop} onClick={props.onCartHiddenVisibility}></div>
     );
-
 };
 
 const ModalOverlay = (props) => {
-
     return (
         <div className={styles.modal}>
             <div className={styles.content}>{props.children}</div>
         </div>
-    )
-
+    );
 };
 
 //Gets the id="overlays from the public -> index.html file"
@@ -28,7 +24,7 @@ const Modal = (props) => {
 
     return (
         <React.Fragment>
-            {ReactDOM.createPortal(<Backdrop/>, portalElement)}
+            {ReactDOM.createPortal(<Backdrop cartClosed={props.onCartHiddenVisibility}/>, portalElement)}
             {ReactDOM.createPortal(<ModalOverlay>{props.children}</ModalOverlay>, portalElement)}           
         </React.Fragment>
     );
