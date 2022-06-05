@@ -1,23 +1,33 @@
+import React, { useContext } from 'react';
 import styles from './Cart.module.css';
 import Modal from '../UI/Modal';
+import CartContext from '../../store/CartContext';
 
 const Cart = (props) => {
 
-    const cartItems = <ul className={styles['cartItems']}>
-        {[{id: 'c1', name: 'Pizza', amount: 2, price: 10.99}].map(item => 
+    const cartContext = useContext(CartContext);
+
+    const totalAmount = `£${cartContext.totalAmount.toFixed(2)}`;
+    const hasItems = cartContext.items.length > 0;
+
+
+    const cartItems = (
+    <ul className={styles['cartItems']}>
+        {cartContext.items.map((item) => (
         <li>{item.name}</li>
-        )}
-        </ul>;
+        ))}
+    </ul>
+    );
 
     return (
         <Modal closeCartModel={props.cartClosed}>
             {cartItems}
             <div className={styles.total}>
                 <span>Total Amount</span>
-                <span>23.89</span>
+                <span>{totalAmount}</span>
             </div>
             <div className={styles.actions}>
-                <button className={styles.button}>Order</button>
+                {hasItems && <button className={styles.button}>Order</button>}
                 <button className={styles['buttonAlt']} onClick={props.onCartHiddenVisibility}>
                     Close
                 </button>

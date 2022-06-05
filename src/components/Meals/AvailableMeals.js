@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './AvailableMeals.module.css';
 import Card from '../UI/Card';
 import MealItem from './MealItem/Mealitem';
@@ -41,18 +40,14 @@ const AvailableMeals = () => {
       price={meal.price}
     />
     )
-
     return (
-        <React.Fragment>
-            <section className={styles.meals}>
-              <Card>
-                <ul>
-                    {mealsList}
-                </ul>
-              </Card>                
-            </section>
-            
-        </React.Fragment>
+      <section className={styles.meals}>
+        <Card>
+          <ul>
+            {mealsList}
+          </ul>
+        </Card>                
+      </section>
     );
 };
 

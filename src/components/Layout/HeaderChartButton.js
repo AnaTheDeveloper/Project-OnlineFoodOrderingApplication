@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
 import styles from './HeaderChartButton.module.css';
 import CartIcon from '../Cart/CartIcon';
-import CardContext from '../../store/CartContext';
+import CartContext from '../../store/CartContext';
 
 const HeaderChartButton = (props) => {
 
-    const useCartContext = useContext(CardContext);
+    const useCartContext = useContext(CartContext);
 
     const numberOfCartItems = useCartContext.items.reduce((currentNumber, item) => {
         return currentNumber + item.amount;
