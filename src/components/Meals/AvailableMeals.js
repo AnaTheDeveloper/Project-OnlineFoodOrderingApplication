@@ -1,37 +1,68 @@
 import styles from './AvailableMeals.module.css';
 import Card from '../UI/Card';
 import MealItem from './MealItem/Mealitem';
-
-const DUMMY_MEALS = [
-    {
-      id: 'm1',
-      name: 'Pizza',
-      description: 'A classic pepperoni',
-      price: 10.99,
-    },
-    {
-      id: 'm2',
-      name: 'Risotto',
-      description: 'Creamy chicken risotto',
-      price: 15.99,
-    },
-    {
-      id: 'm3',
-      name: 'Ramen',
-      description: 'Tonkotsu with an egg',
-      price: 13.50,
-    },
-    {
-      id: 'm4',
-      name: 'Homemade Pie',
-      description: 'Egg and bacon pie in a shortcrust pastry',
-      price: 8.99,
-    },
-  ];
+import { useCallback, useEffect, useState } from 'react';
 
 const AvailableMeals = () => {
 
-    const mealsList = DUMMY_MEALS.map(meal => 
+  const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+
+    const fetchMealsHandler = async () => {
+
+      setIsLoading(true);
+      //   setError(null);
+
+      try {
+        const response = await fetch('https://react-food-ordering-app-9d7a9-default-rtdb.firebaseio.com/meals.json');
+
+          if (!response.ok) {
+            throw new Error('Something went wrong!');
+          }
+
+          const responseData = await response.json(); //Returns an object but we want an array
+
+          console.log("Response Data: ", responseData);
+
+          const loadedMeals = [];
+
+          //For loop to transfer data from an object to an array.
+          for (const key in responseData) {
+            loadedMeals.push({
+              id: key,
+              name: responseData[key].name,
+              description: responseData[key].description,
+              price: responseData[key].price,
+            });
+          }
+          setMeals(loadedMeals);
+          setIsLoading(false);
+      } catch (error) {
+        setError(error.message);
+      }
+      //   setIsLoading(false);
+    };
+
+    fetchMealsHandler();
+
+  }, []);
+
+  // useEffect(() => {
+  //   fetchMealsHandler();
+  // }, [fetchMealsHandler]);
+
+  if (isLoading) {
+    return (
+    <section className={styles.mealsLoading}>
+      <p>Loading...</p>
+    </section>
+    );
+  };
+
+    const mealsList = meals.map(meal => 
     <MealItem 
       id={meal.id}
       key={meal.id} 
