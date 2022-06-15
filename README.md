@@ -7,6 +7,8 @@ A food ordering application utalizing the following skills:
 * Portals
 * React Context API
 * Hooks
+* Forms
+* User Input
 * HTTP Requests
 * Database connectivity
 * Firebase
