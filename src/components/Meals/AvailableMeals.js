@@ -7,52 +7,45 @@ const AvailableMeals = () => {
 
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [httpError, setHttpError] = useState();
 
   useEffect(() => {
 
     const fetchMealsHandler = async () => {
 
       setIsLoading(true);
-      //   setError(null);
+      
+      const response = await fetch('https://react-food-ordering-app-9d7a9-default-rtdb.firebaseio.com/meals.json');
 
-      try {
-        const response = await fetch('https://react-food-ordering-app-9d7a9-default-rtdb.firebaseio.com/meals.json');
+        if (!response.ok) {
+          throw new Error('Something went wrong!');
+        }  
 
-          if (!response.ok) {
-            throw new Error('Something went wrong!');
-          }
+        const responseData = await response.json(); //Returns an object but we want an array
 
-          const responseData = await response.json(); //Returns an object but we want an array
+        console.log("Response Data: ", responseData);
 
-          console.log("Response Data: ", responseData);
+        const loadedMeals = [];
 
-          const loadedMeals = [];
-
-          //For loop to transfer data from an object to an array.
-          for (const key in responseData) {
-            loadedMeals.push({
-              id: key,
-              name: responseData[key].name,
-              description: responseData[key].description,
-              price: responseData[key].price,
-            });
-          }
-          setMeals(loadedMeals);
-          setIsLoading(false);
-      } catch (error) {
-        setError(error.message);
-      }
-      //   setIsLoading(false);
+        //For loop to transfer data from an object to an array.
+        for (const key in responseData) {
+          loadedMeals.push({
+            id: key,
+            name: responseData[key].name,
+            description: responseData[key].description,
+            price: responseData[key].price,
+          });
+        }
+        setMeals(loadedMeals);
+        setIsLoading(false);
     };
 
-    fetchMealsHandler();
+    fetchMealsHandler().catch(error => {
+      setIsLoading(false);
+      setHttpError(error.message)
+    });
 
   }, []);
-
-  // useEffect(() => {
-  //   fetchMealsHandler();
-  // }, [fetchMealsHandler]);
 
   if (isLoading) {
     return (
@@ -61,6 +54,14 @@ const AvailableMeals = () => {
     </section>
     );
   };
+
+  if (httpError) {
+    return (
+      <section className={styles.mealsError}>
+        <p>{httpError}</p>
+      </section>
+    )
+  }
 
     const mealsList = meals.map(meal => 
     <MealItem 
