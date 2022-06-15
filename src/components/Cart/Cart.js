@@ -26,7 +26,15 @@ const Cart = (props) => {
         setIsCheckout(true);
     }
 
-   
+    const submitOrderHandler = (userData) => {
+        fetch('https://react-food-ordering-app-9d7a9-default-rtdb.firebaseio.com/orders.json', {
+            method:'POST',
+            body: JSON.stringify({
+                user: userData,
+                orderedItems: cartContext.items
+            })
+        });
+    };
 
     const cartItems = (
     <ul className={styles['cartItems']}>
