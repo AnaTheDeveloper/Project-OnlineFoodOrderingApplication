@@ -1,6 +1,6 @@
 **Online Food Ordering Application Using React JS**
 
-A food ordering application utalising the following skills:
+A food ordering application utalizing the following skills:
 * Multiple Components
 * State
 * Refs
