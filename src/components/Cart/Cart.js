@@ -8,6 +8,8 @@ import Checkout from './Checkout';
 const Cart = (props) => {
 
     const [isCheckout, setIsCheckout] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [didSubmit, setDidSubmit] = useState(false);
 
     const cartContext = useContext(CartContext);
 
@@ -26,14 +28,26 @@ const Cart = (props) => {
         setIsCheckout(true);
     }
 
-    const submitOrderHandler = (userData) => {
-        fetch('https://react-food-ordering-app-9d7a9-default-rtdb.firebaseio.com/orders.json', {
+    const submitOrderHandler = async(userData) => {
+        setIsSubmitting(true);
+        const response = await fetch('https://react-food-ordering-app-9d7a9-default-rtdb.firebaseio.com/orders.json', {
             method:'POST',
             body: JSON.stringify({
                 user: userData,
                 orderedItems: cartContext.items
             })
         });
+
+        if (!response.ok) {
+            throw new Error('Something went wrong!');
+        }
+
+        const responseData = await response.json();
+        console.log(responseData);
+
+        setIsSubmitting(false);
+        setDidSubmit(true);
+        cartContext.clearCart();
     };
 
     const cartItems = (
@@ -59,16 +73,30 @@ const Cart = (props) => {
         </button>
     </div>
 
+    const cartModelContent = <React.Fragment>
+        {cartItems}
+        <div className={styles.total}>
+            <span>Total Amount</span>
+            <span>{totalAmount}</span>
+        </div>
+        {isCheckout && <Checkout onCancel={props.onCartHiddenVisibility} onConfirm={submitOrderHandler}/>}
+        {!isCheckout && modalButtonVisibilityToggle}
+    </React.Fragment>
+
+    const isSubmittingModelContent = <p>Processing Order...</p>;
+
+    const didSubmitOrder = <React.Fragment>
+        <p>Order Successful!</p>
+        <div className={styles.actions}>
+        <button className={styles.closeButton} onClick={props.onCartHiddenVisibility}>Close</button>
+    </div>
+    </React.Fragment>;
+
     return (
         <Modal closeCartModel={props.cartClosed}>
-            {cartItems}
-            <div className={styles.total}>
-                <span>Total Amount</span>
-                <span>{totalAmount}</span>
-            </div>
-            {isCheckout && <Checkout onCancel={props.onCartHiddenVisibility} onConfirm={submitOrderHandler}/>}
-            {!isCheckout && modalButtonVisibilityToggle}
-            
+            {!isSubmitting && !didSubmit && cartModelContent}
+            {isSubmitting && isSubmittingModelContent}
+            {!isSubmitting && didSubmit && didSubmitOrder}
         </Modal>
     );
 };
