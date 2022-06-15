@@ -22,25 +22,71 @@
   max-width: 100%;
 }
 
+.controlGroup {
+  column-gap: 1rem;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.addressDetails {
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
 }
 
-.actions button {
-  font: inherit;
-  color: #5a1a01;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
+button:disabled,
+button:disabled:hover,
+button:disabled:active {
+  background-color: lightgray;
+  color: darkgray;
+  border-color: lightgray;
+  cursor: not-allowed;
+  padding: 0.5rem 2rem;
   border-radius: 25px;
-  padding: 0.5rem 2rem; 
+  margin-left: 1rem;
 }
 
-.actions button:hover,
-.actions button:active {
-  background-color: #ffe6dc;
+.actions .orderButton {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid #004700;
+  background-color: #004700;
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  margin-left: 1rem;
+}
+
+.actions .orderButton:hover,
+.actions .orderButton:active {
+  background-color: #038d03;
+  border-color: #038d03;
+  color: white;
+}
+
+.actions .cancelButton {
+  font: inherit;
+  cursor: pointer;
+  background-color: #470000;
+  border-color: #470000;
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  margin-left: 1rem;
+}
+
+.actions .cancelButton:hover,
+.actions .cancelButton:active {
+    background-color: #8b0404;
+    border-color: #8b0404;
+    color: white;
 }
 
 .actions .submit {
@@ -62,3 +108,8 @@
   border-color: #aa0b20;
   background-color: #ffeff1;
 }
+
+.invalid p {
+  color: #aa0b20;
+}
+

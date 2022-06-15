@@ -13,34 +13,47 @@
     font-weight: bold;
     font-size: 1.5rem;
     margin: 1rem 0;
+    background-color: rgb(228, 228, 228);
 }
   
 .actions {
     text-align: right;
 }
   
-.actions button {
+.actions .orderButton {
     font: inherit;
     cursor: pointer;
-    background-color: transparent;
+    /* background-color: transparent; */
     border: 1px solid #004700;
+    background-color: #004700;
+    color: white;
     padding: 0.5rem 2rem;
     border-radius: 25px;
     margin-left: 1rem;
 }
   
-.actions button:hover,
-.actions button:active {
+.actions .orderButton:hover,
+.actions .orderButton:active {
+    background-color: #038d03;
+    border-color: #038d03;
+    color: white;
+}
+  
+.actions .closeButton {
+    font: inherit;
+    cursor: pointer;
     background-color: #470000;
     border-color: #470000;
     color: white;
+    padding: 0.5rem 2rem;
+    border-radius: 25px;
+    margin-left: 1rem;
 }
-  
-.actions .buttonAlt {
-    color: #004700;
-}
-  
-.actions .button {
-    background-color: #004700;
+
+.actions .closeButton:hover,
+.actions .closeButton:active {
+    background-color: #8b0404;
+    border-color: #8b0404;
     color: white;
 }
+  
