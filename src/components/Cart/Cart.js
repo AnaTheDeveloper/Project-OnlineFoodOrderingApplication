@@ -3,6 +3,7 @@ import styles from './Cart.module.css';
 import Modal from '../UI/Modal';
 import CartContext from '../../store/CartContext';
 import CartItem from './CartItem';
+import Checkout from './Checkout';
 
 const Cart = (props) => {
 
@@ -41,6 +42,7 @@ const Cart = (props) => {
                 <span>Total Amount</span>
                 <span>{totalAmount}</span>
             </div>
+            <Checkout />
             <div className={styles.actions}>
                 {hasItems && <button className={styles.button}>Order</button>}
                 <button className={styles['buttonAlt']} onClick={props.onCartHiddenVisibility}>
